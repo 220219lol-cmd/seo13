@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>USDT 充值不到账自检指南（SEO13）</title>
+  <meta name="description" content="USDT 充值不到账自检指南：从网络选择、地址核对、TXID 查询、确认数判断到常见原因排查，提供可执行的处理步骤。">
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="./" />
+
+  <style>
+    :root{
+      --bg:#020617;
+      --card:rgba(15,23,42,.96);
+      --line:rgba(148,163,184,.45);
+      --text:rgba(248,250,252,.96);
+      --muted:rgba(148,163,184,.92);
+      --accent:#22c55e;
+      --accent2:#38bdf8;
+      --warn:#f97316;
+      --shadow:0 20px 60px rgba(0,0,0,.65);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 500px at 12% 0%, rgba(56,189,248,.28), transparent 60%),
+        radial-gradient(900px 500px at 90% 22%, rgba(34,197,94,.22), transparent 60%),
+        linear-gradient(180deg,#020617,#020617);
+      line-height:1.75;
+    }
+    .wrap{max-width:1080px;margin:0 auto;padding:40px 18px 90px}
+    .hero{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(15,23,42,.98),rgba(15,23,42,.96));
+      border-radius:22px;
+      padding:26px 22px 24px;
+      box-shadow:var(--shadow);
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 12px;border-radius:999px;
+      background:rgba(56,189,248,.18);
+      border:1px solid rgba(56,189,248,.5);
+      font-size:13px;
+      font-weight:800;
+      color:#7dd3fc;
+    }
+    .title{margin:14px 0 6px;font-size:30px}
+    .sub{margin:0;color:var(--muted);max-width:900px;font-size:15px}
+
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}
+    @media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+    .card{
+      border:1px solid var(--line);
+      background:var(--card);
+      border-radius:18px;
+      padding:18px;
+    }
+    .h2{margin:0 0 10px;font-size:18px}
+    .list{margin:8px 0 0;padding-left:18px;font-size:14px}
+    .list li{margin:6px 0}
+
+    .steps{counter-reset:s;margin:0;padding:0;list-style:none}
+    .steps li{
+      counter-increment:s;
+      margin:10px 0;
+      padding:12px 14px;
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:rgba(2,6,23,.35);
+      font-size:14px;
+    }
+    .steps li:before{
+      content:"步骤 " counter(s);
+      display:inline-flex;
+      margin-bottom:6px;
+      font-weight:900;
+      color:var(--accent2);
+    }
+    .note{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px dashed rgba(34,197,94,.55);
+      background:rgba(22,163,74,.18);
+      font-size:13px;
+      color:#bbf7d0;
+    }
+    .warn{
+      margin-top:12px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px dashed rgba(249,115,22,.7);
+      background:rgba(248,113,22,.18);
+      font-size:13px;
+      color:#fed7aa;
+    }
+
+    .faq{margin-top:18px}
+    .faq h2{font-size:18px;margin:0 0 8px}
+    .faq details{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+      background:rgba(15,23,42,.96);
+      margin-top:8px;
+      font-size:14px;
+    }
+    .faq summary{cursor:pointer;font-weight:700}
+    .faq p{margin:8px 0 0;color:var(--muted)}
+    .foot{margin-top:20px;color:rgba(148,163,184,.9);font-size:12px;text-align:center}
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebPage",
+    "name":"USDT 充值不到账自检指南（SEO13）",
+    "description":"USDT 充值不到账自检指南：从网络、地址、TXID、确认数到常见原因，提供可执行的排查步骤。",
+    "inLanguage":"zh-CN"
+  }
+  </script>
+</head>
+
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="badge">SEO13 · 充值不到账排查</div>
+    <h1 class="title">USDT 充值不到账自检指南</h1>
+    <p class="sub">
+      充值不到账并不一定是异常。很多情况下只是网络选择、确认数或平台入账规则导致显示延迟。
+      你可以按下面步骤自检，快速定位问题发生在哪一环。
+    </p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2 class="h2">一、先确认：是否网络选错？</h2>
+      <ul class="list">
+        <li>收款方支持 TRC20 你就必须用 TRC20</li>
+        <li>收款方支持 ERC20 你就必须用 ERC20</li>
+        <li>地址看起来像 ≠ 网络一致</li>
+      </ul>
+      <div class="warn">⚠️ 网络选错是“不到账”最常见原因。</div>
+    </div>
+
+    <div class="card">
+      <h2 class="h2">二、是否存在 TXID？</h2>
+      <ul class="list">
+        <li>有 TXID：交易已上链，可被验证</li>
+        <li>无 TXID：通常代表未广播或未提交成功</li>
+        <li>TXID 是判断问题的“唯一凭证”</li>
+      </ul>
+      <div class="note">✅ 先找 TXID，再讨论不到账。</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2 class="h2">三、按步骤自检（建议顺序）</h2>
+    <ol class="steps">
+      <li>核对收款网络类型（TRC20 / ERC20）是否一致</li>
+      <li>核对收款地址是否完整无误（无空格、无截断）</li>
+      <li>获取 TXID 并在链上查询交易状态</li>
+      <li>查看确认数是否在增长，是否达到平台要求</li>
+      <li>若确认数达标仍未入账：记录时间、金额、TXID 准备联系支持</li>
+    </ol>
+    <div class="note">✅ 多数“不到账”问题，做到第 4 步就能定位原因。</div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2 class="h2">四、常见原因汇总</h2>
+    <ul class="list">
+      <li>平台要求更多确认数（确认未达标）</li>
+      <li>网络拥堵导致确认慢（尤其 ERC20）</li>
+      <li>地址正确但网络不一致</li>
+      <li>充值需要 Memo/Tag 但未填写（部分平台）</li>
+      <li>平台入账处理存在延迟或维护</li>
+    </ul>
+    <div class="warn">⚠️ 不要重复转账“试试”，先用 TXID 查清楚。</div>
+  </div>
+
+  <div class="faq">
+    <h2>五、充值不到账常见问答（FAQ）</h2>
+
+    <details>
+      <summary>确认数在增加，但平台没到账，正常吗？</summary>
+      <p>很多平台会要求达到一定确认数才入账，确认数未达标属于正常等待。</p>
+    </details>
+
+    <details>
+      <summary>如果网络选错，资金一定没了吗？</summary>
+      <p>网络选错属于高风险错误，处理难度更大，应尽量避免。以平台说明为准。</p>
+    </details>
+
+    <details>
+      <summary>没有 TXID 怎么办？</summary>
+      <p>通常代表交易未广播成功。检查钱包交易记录或重新提交前先确认失败原因。</p>
+    </details>
+  </div>
+
+  <div class="foot">SEO13 · GitHub Pages 自检指南｜USDT 充值不到账</div>
+</div>
+</body>
+</html>
